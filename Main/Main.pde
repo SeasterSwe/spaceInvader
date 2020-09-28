@@ -25,6 +25,8 @@ void draw() {
 void clearBackground()
 {
 	//Fill screen with rect, with alpha for cool effect.
-	fill(0, 0, 0, 50);
-	rect(-10, 10, width, height);
+	fill(0, 0, 0, 80);
+	//stroke(0);
+	strokeWeight(1);
+	rect(-100, -110, width + 100, height + 300); 
 }
