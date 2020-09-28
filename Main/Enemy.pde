@@ -61,6 +61,11 @@ class Enemy
 		line(eSize/2, eSize/2, eSize + f * 6f, length + f * 6f);
 	}
 
+	void killed()
+	{
+		enemyManager.enemys.remove(this);
+	}
+
 	void boarderCheck()
 	{
 		if (pos.x > width - (eSize * 2))  {
@@ -130,4 +135,24 @@ class EnemyManager
 		}
 	}
 
+}
+
+public class DeathEffect
+{ 
+	PVector pos;
+	color c;
+	DeathEffect(float x, float y)
+	{
+		pos = new PVector(x,y);
+		c = color(random(40,60)); //´kanske tarbort
+	}
+	void drawDeathEffect()
+	{	
+		pushMatrix();
+		fill(color(c));
+		stroke(c);
+		translate(pos.x, pos.y);
+		//ngt
+		popMatrix();
+	}
 }
