@@ -10,7 +10,8 @@ class Enemy
 
 	Enemy(float x, float y)
 	{
-		float redval = random(60, 81);
+		
+		float redval = random(60, 91);
 		baseColor = color(redval, (200 - redval), 0);
 		eyeColor = color(random(60, 200));
 		

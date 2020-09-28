@@ -6,7 +6,9 @@ public class Player {
 	int health = 3;
 	float speed = 100;
 	float maxSpeed = 12;
-		
+
+	color playerColor = color(60, 30,150);
+
 	public Player () {
 		
 	}
@@ -24,7 +26,8 @@ public class Player {
 	}
 
 	void draw() {
-		fill(255, 0, 0);
+		fill(playerColor);
+		stroke(playerColor);
 		rect(position.x, position.y, 50, 25 , 10);
 		rect(position.x +20, position.y - 15, 10, 15, 10, 10, 0,0);
 	}
