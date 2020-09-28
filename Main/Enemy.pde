@@ -71,7 +71,7 @@ class EnemyManager
 		float yStart = 50;
 
 		float xDist = (width - xStart * 2)/xRow;
-		float yDist = (height/2 - yStart)/yRow;
+		float yDist = 25; //bör va lite större än eSize
 
 		for (int x = 0; x < xRow; ++x) {
 			for (int y = 0; y < yRow; ++y) {
