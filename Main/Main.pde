@@ -10,6 +10,8 @@ void setup() {
 void draw() {
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
+	background(255,255,255);
+	player.update();
 	player.draw();
 	time = currentTime;
 }
