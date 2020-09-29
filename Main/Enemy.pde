@@ -23,7 +23,6 @@ class Enemy
 	void draw(float x)
 	{
 		boarderCheck();
-		debugBoarder();
 		stroke(baseColor);
 		fill(baseColor);
 		
@@ -63,6 +62,7 @@ class Enemy
 
 	void killed()
 	{
+		enemyManager.increaseSpeed();
 		enemyManager.enemys.remove(this);
 	}
 
@@ -80,13 +80,6 @@ class Enemy
 			enemyManager.moveDown(1);
 		}
 	}
-
-	void debugBoarder()
-	{
-		if (oldPos.x - 60 > pos.x || oldPos.x + 60 < pos.x) {
-			enemyManager.canChange = true;
-		}
-	}
 }
 
 static float dirX = 1;
@@ -96,11 +89,14 @@ class EnemyManager
 	int xRow = 12;
 	int yRow = 8;
 
-	float speedMag = 2; // lite oklart ska inte ljuga
-	float currentSpeed = 2;
+	float speedMag = 1; // lite oklart ska inte ljuga
+	float currentSpeed = 1;
+	float speedIncreasePerDeath;
 
 	ArrayList<Enemy> enemys = new ArrayList<Enemy>();
 	boolean canChange = true;
+
+	float t; //debugTimer sätter variablar till true
 
 	void spawnEnemys()
 	{
@@ -109,6 +105,8 @@ class EnemyManager
 
 		float xDist = (width - xStart * 2)/xRow;
 		float yDist = 25; //bör va lite större än eSize
+
+		speedIncreasePerDeath = 3f/xRow/yRow;
 
 		for (int x = 0; x < xRow; ++x) {
 			for (int y = 0; y < yRow; ++y) {
@@ -119,6 +117,7 @@ class EnemyManager
 	
 	void draw()
 	{
+		debugBoarder();
 		for (int i = 0; i < enemys.size(); ++i) {
 			if(i == 0)
 			{
@@ -127,14 +126,39 @@ class EnemyManager
 			enemys.get(i).draw(currentSpeed);
 		}
 	}
-
+	boolean moveDownActive = true;
 	void moveDown(float distDown)
 	{
-		for (int i = 0; i < enemys.size(); ++i) {
-			enemys.get(i).pos.y += distDown;
+		if(moveDownActive)
+		{
+			t = millis() + 1000;
+			moveDownActive = false;
+			//removeTesting();
+			for (int i = 0; i < enemys.size(); ++i) {
+				enemys.get(i).pos.y += distDown;
+			}
 		}
 	}
 
+	void debugBoarder()
+	{
+		if (t < millis()) {
+			enemyManager.canChange = true;
+			enemyManager.moveDownActive = true;
+		}
+	}
+
+	void increaseSpeed()
+	{
+		speedMag += speedIncreasePerDeath;
+		println("speedMag: "+speedMag);
+	}
+
+	void removeTesting()
+	{
+		int r = (int)random(0, enemys.size());
+		enemys.get(r).killed();
+	}
 }
 
 public class DeathEffect
