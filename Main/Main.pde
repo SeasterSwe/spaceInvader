@@ -48,7 +48,7 @@ void drawBullets()
 }
 
 void clearBackground()
-{
+{ 	//wowbagger
 	//Fill screen with rect, with alpha for cool effect.
 	fill(0, 0, 0, 80);
 	//stroke(0);

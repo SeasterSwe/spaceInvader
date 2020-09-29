@@ -44,6 +44,21 @@ public class Player {
 		}
 	} 
 
+	void visualizeLives()
+	{
+		for (int i = 0; i < lives; ++i) {
+			playerShape(10 + 70 * i, height - sizeH);
+		}
+	}
+
+	void playerShape(float x, float y)
+	{
+		fill(playerColor);
+		stroke(color(80,30,200));
+		rect(x, y, sizeW, sizeH , 10);
+		rect(x +20, y - 15, 10, 15, 10, 10, 0,0);
+	}
+
 	void projectile() {
 		if (fire && playerProjectile == null) {
 		playerProjectile = new PlayerProjectile(position.x + sizeH, position.y);

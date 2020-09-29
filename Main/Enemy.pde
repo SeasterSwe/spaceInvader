@@ -1,3 +1,5 @@
+
+//Jakob
 class Enemy
 {
 	color baseColor;
@@ -8,7 +10,8 @@ class Enemy
 
 	float eSize = 20;
 
-	Enemy(float x, float y)
+	float amountToAddToScore;
+	Enemy(float x, float y, float scoreGive)
 	{
 		//float redVal = random(80,250);
 		//float blueVal = random(40, 60);
@@ -18,6 +21,7 @@ class Enemy
 		
 		ellipseMode(CENTER);
 		pos = new PVector(x,y);
+		amountToAddToScore = scoreGive;
 	}
 
 	void draw(float x)
@@ -75,7 +79,8 @@ class Enemy
 	void killed()
 	{
 		enemyManager.increaseSpeed();
-		score += 55;
+		score += amountToAddToScore;
+		//println("amountToAddToScore: "+amountToAddToScore);
 		enemyManager.enemys.remove(this);
 	}
 
@@ -187,7 +192,8 @@ class EnemyManager
 
 		for (int x = 0; x < xRow; ++x) {
 			for (int y = 0; y < yRow; ++y) {
-				enemys.add(new Enemy(xStart + x * xDist, yStart + y * yDist));
+				float amountOfScoreToGive = 10 * (2+yRow - y);
+				enemys.add(new Enemy(xStart + x * xDist, yStart + y * yDist, amountOfScoreToGive));
 			}		
 		}
 		shoot();
