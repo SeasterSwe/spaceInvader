@@ -37,7 +37,11 @@ public class Player {
 		
 	}
 	void killed() {
-
+		lives--;
+		if(lives <= 0)
+		{
+			alive = false;
+		}
 	} 
 
 	void projectile() {

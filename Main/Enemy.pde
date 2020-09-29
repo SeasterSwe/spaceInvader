@@ -67,6 +67,7 @@ class Enemy
 	void killed()
 	{
 		enemyManager.increaseSpeed();
+		score += 55;
 		enemyManager.enemys.remove(this);
 	}
 
@@ -100,12 +101,27 @@ class EnemyProjectile
 
 	void draw()
 	{
-		color c = color(154, 20, 20);
+		pos.y += speed;
+		
+		float f = sin(frameCount * 0.2);
+		
+		stroke(206, 176, 0); //stor
+		strokeWeight(4.5);
+		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 2, pos.y - 7);
+		
+		strokeWeight(2.5); //liten
+		stroke(206, 121, 0);
+		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 2, pos.y - 7);
+
+		color c = color(204, 0, 5); //bullet
 		stroke(c);
 		fill(c);
-		pos.y += speed;
-		rect(pos.x, pos.y, sizeW, sizeH, 0,0,10,10);
+		strokeWeight(1);
+		rect(pos.x - sizeW, pos.y + sizeW, 8 + sizeW, 2);
+		rect(pos.x, pos.y, sizeW, sizeH, 2,2,10,10);
 		collison();
+
+		outOfScreen();
 	}
 
 	void collison()
@@ -115,8 +131,16 @@ class EnemyProjectile
 		if(player.position.y - pos.y < player.sizeH - 10)
 		{
 			if (pos.x + sizeW > x1 && pos.x < x2) {
+				player.killed();
 				remove();
 			}
+		}
+	}
+
+	void outOfScreen()
+	{
+		if (pos.y > height + sizeH) {
+			remove();
 		}
 	}
 
