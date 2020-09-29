@@ -147,7 +147,7 @@ class EnemyProjectile
 
 	void outOfScreen()
 	{
-		if (pos.y > height + sizeH) {
+		if (pos.y > player.position.y + player.sizeH - sizeH) {
 			remove();
 		}
 	}

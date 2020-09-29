@@ -23,6 +23,9 @@ void draw() {
 	player.draw();
 
 	enemyManager.draw();
+	floorLine();
+
+
 	gameOver();
 	typeScore();
 	time = currentTime;
@@ -65,6 +68,12 @@ void gameOver()
 			restart();	
 		}
 	}
+}
+
+void floorLine()
+{
+	stroke(255, 146, 0);
+	line(0, player.position.y + player.sizeH, width, player.position.y + player.sizeH);
 }
 
 void restart()
