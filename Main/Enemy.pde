@@ -239,8 +239,11 @@ class EnemyManager
 
 	void shoot()
 	{
-		int r = (int)random(0, enemys.size());
-		PVector temp = enemys.get(r).pos;
-		bullets.add(new EnemyProjectile(temp.x, temp.y));
+		if(enemys.size() > 0)
+		{
+			int r = (int)random(0, enemys.size());
+			PVector temp = enemys.get(r).pos;
+			bullets.add(new EnemyProjectile(temp.x, temp.y));
+		}
 	}
 }
