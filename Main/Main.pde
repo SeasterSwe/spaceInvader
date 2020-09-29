@@ -4,6 +4,7 @@ Player player;
 
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
+
 static boolean alive = true;
 static int score = 0;
 void setup() {
@@ -17,7 +18,6 @@ void draw() {
 	clearBackground();
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
-	//background(255,255,255);
 	drawBullets();
 	player.update();
 	player.draw();
@@ -32,6 +32,7 @@ void typeScore()
 {
 	textSize(15);
 	fill(249, 236, 194);
+	textAlign(LEFT);
 	text("Score: " + score,10,20);
 }
 
@@ -71,6 +72,7 @@ void restart()
 	score = 0;
 	enemyManager = new EnemyManager();
 	alive = true;	
+	bullets.clear();
 	enemyManager.spawnEnemys();
 	player = new Player();
 }

@@ -39,7 +39,7 @@ class Enemy
 		
 		legs(10, 0.2);
 		eyes(); //hhaahah i tried
-
+		mouth(); //ganskailla
 
 		popMatrix(); 
 	}
@@ -62,6 +62,14 @@ class Enemy
 		stroke(baseColor);
 		line(-eSize/2, eSize/2, -eSize + f * 6f, length + f * 6f);
 		line(eSize/2, eSize/2, eSize + f * 6f, length + f * 6f);
+	}
+
+	void mouth()
+	{
+		stroke(eyeColor);
+		noFill();
+		rotate(180);
+		arc(-8, -8, eSize/2, eSize/2, -0.2, 1.6);
 	}
 
 	void killed()
@@ -107,11 +115,11 @@ class EnemyProjectile
 		
 		stroke(206, 176, 0); //stor
 		strokeWeight(4.5);
-		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 2, pos.y - 7);
+		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 1.5, pos.y - 7);
 		
 		strokeWeight(2.5); //liten
 		stroke(206, 121, 0);
-		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 2, pos.y - 7);
+		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 1.5, pos.y - 7);
 
 		color c = color(204, 0, 5); //bullet
 		stroke(c);
@@ -128,7 +136,7 @@ class EnemyProjectile
 	{
 		float x1 = player.position.x;
 		float x2 = player.sizeW + x1;
-		if(player.position.y - pos.y < player.sizeH - 10)
+		if(abs(player.position.y - pos.y) < player.sizeH - 10)
 		{
 			if (pos.x + sizeW > x1 && pos.x < x2) {
 				player.killed();
@@ -146,6 +154,7 @@ class EnemyProjectile
 
 	void remove()
 	{
+		enemyManager.shoot();
 		bullets.remove(this);
 	}
 }
@@ -181,6 +190,7 @@ class EnemyManager
 				enemys.add(new Enemy(xStart + x * xDist, yStart + y * yDist));
 			}		
 		}
+		shoot();
 	}
 	
 	void draw()
@@ -202,7 +212,6 @@ class EnemyManager
 		{
 			t = millis() + 1000;
 			moveDownActive = false;
-			shoot();
 			for (int i = 0; i < enemys.size(); ++i) {
 				enemys.get(i).pos.y += distDown;
 			}
@@ -227,25 +236,5 @@ class EnemyManager
 		int r = (int)random(0, enemys.size());
 		PVector temp = enemys.get(r).pos;
 		bullets.add(new EnemyProjectile(temp.x, temp.y));
-	}
-}
-
-public class DeathEffect
-{ 
-	PVector pos;
-	color c;
-	DeathEffect(float x, float y)
-	{
-		pos = new PVector(x,y);
-		c = color(random(40,60)); //´kanske tarbort
-	}
-	void drawDeathEffect()
-	{	
-		pushMatrix();
-		fill(color(c));
-		stroke(c);
-		translate(pos.x, pos.y);
-		//ngt
-		popMatrix();
 	}
 }
