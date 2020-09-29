@@ -11,13 +11,28 @@ public class PlayerProjectile  {
 		
 	}
 	void draw(){
+
 		rect(position.x, position.y, sizeW, sizeH, 10);
 		
 		
 	}
 	boolean collision() {
 
-	
+		if(bullets.size() >= 1) {
+			for (int i = 0; i < bullets.size(); ++i) {
+
+				if ((position.x >= bullets.get(i).pos.x && position.x <= bullets.get(i).pos.x + bullets.get(i).sizeW) || (position.x + sizeW >= bullets.get(i).pos.x && position.x + sizeW <= bullets.get(i).pos.x + bullets.get(i).sizeW)) {
+					
+					if (position.y > bullets.get(i).pos.y && position.y < bullets.get(i).pos.y + bullets.get(i).sizeH) {
+						bullets.get(i).remove();
+						return true;
+					}
+				}
+
+
+				
+			}
+		}
 		for (int i = 0; i < enemyManager.enemys.size(); ++i) {
 			float enemyXPos = enemyManager.enemys.get(i).pos.x;
 			float enemyYPos = enemyManager.enemys.get(i).pos.y;
