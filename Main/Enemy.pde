@@ -10,11 +10,11 @@ class Enemy
 
 	Enemy(float x, float y)
 	{
-		float redVal = random(80,250);
-		float blueVal = random(40, 60);
-		color c = color(redVal, 0, blueVal);
-		baseColor = c;
-		eyeColor = color(random(170, 210));
+		//float redVal = random(80,250);
+		//float blueVal = random(40, 60);
+		//color c = color(redVal, 0, blueVal);
+		baseColor = color(16, 121, 23);
+		eyeColor = color(152, 196, 155);
 		
 		ellipseMode(CENTER);
 		pos = new PVector(x,y);
@@ -25,10 +25,11 @@ class Enemy
 		boarderCheck();
 		stroke(baseColor);
 		fill(baseColor);
-		
+		strokeWeight(3);
 		pos.x += x;
 		ellipse(pos.x, pos.y, eSize, eSize);
 		animation();
+
 	}
 
 	void animation()
@@ -47,8 +48,11 @@ class Enemy
 	{
         stroke(eyeColor);
         fill(eyeColor);
-        circle(eSize/4, -eSize/4, eSize/5); //bättre med rect?
-        circle(-eSize/4, -eSize/4, eSize/5);
+        strokeWeight(2);
+        line(-6, -6, -2, -5);
+        line(6, -6, 2, -5); 
+        ellipse(eSize/4, -eSize/4, 4, 2);
+        ellipse(-eSize/4, -eSize/4, 4, 2);
 	}
 
 	void legs(float length, float legSpeed)
@@ -71,14 +75,54 @@ class Enemy
 		if (pos.x > width - (eSize * 2))  {
 			dirX = -1;
 			oldPos.x = pos.x;
-			enemyManager.moveDown(1);
+			enemyManager.moveDown(2);
 		}
 		else if(pos.x < eSize*2)
 		{
 			dirX = 1;
 			oldPos.x = pos.x;
-			enemyManager.moveDown(1);
+			enemyManager.moveDown(2);
 		}
+	}
+}
+
+class EnemyProjectile
+{
+	PVector pos;
+	float speed = 2;
+	float sizeW = 4;
+	float sizeH = 15;
+
+	EnemyProjectile(float x, float y)
+	{
+		pos = new PVector(x, y);
+	}
+
+	void draw()
+	{
+		color c = color(154, 20, 20);
+		stroke(c);
+		fill(c);
+		pos.y += speed;
+		rect(pos.x, pos.y, sizeW, sizeH, 0,0,10,10);
+		collison();
+	}
+
+	void collison()
+	{
+		float x1 = player.position.x;
+		float x2 = player.sizeW + x1;
+		if(player.position.y - pos.y < player.sizeH - 10)
+		{
+			if (pos.x + sizeW > x1 && pos.x < x2) {
+				remove();
+			}
+		}
+	}
+
+	void remove()
+	{
+		bullets.remove(this);
 	}
 }
 
@@ -126,6 +170,7 @@ class EnemyManager
 			enemys.get(i).draw(currentSpeed);
 		}
 	}
+
 	boolean moveDownActive = true;
 	void moveDown(float distDown)
 	{
@@ -133,7 +178,7 @@ class EnemyManager
 		{
 			t = millis() + 1000;
 			moveDownActive = false;
-			//removeTesting();
+			shoot();
 			for (int i = 0; i < enemys.size(); ++i) {
 				enemys.get(i).pos.y += distDown;
 			}
@@ -151,13 +196,13 @@ class EnemyManager
 	void increaseSpeed()
 	{
 		speedMag += speedIncreasePerDeath;
-		println("speedMag: "+speedMag);
 	}
 
-	void removeTesting()
+	void shoot()
 	{
 		int r = (int)random(0, enemys.size());
-		enemys.get(r).killed();
+		PVector temp = enemys.get(r).pos;
+		bullets.add(new EnemyProjectile(temp.x, temp.y));
 	}
 }
 
