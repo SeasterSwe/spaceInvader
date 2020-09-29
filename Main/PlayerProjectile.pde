@@ -17,13 +17,13 @@ public class PlayerProjectile  {
 	}
 	boolean collision() {
 
-	//	println(enemyManager);
+	
 		for (int i = 0; i < enemyManager.enemys.size(); ++i) {
 			float enemyXPos = enemyManager.enemys.get(i).pos.x;
 			float enemyYPos = enemyManager.enemys.get(i).pos.y;
 		
 			if (position.x + sizeW > enemyXPos && position.x < enemyXPos + enemyManager.enemys.get(i).eSize ) {
-				if (position.y + sizeH > enemyYPos && position.y < enemyYPos + enemyManager.enemys.get(i).eSize ) {
+				if (position.y + sizeH > enemyYPos && position.y + sizeH < enemyYPos + enemyManager.enemys.get(i).eSize ) {
 						enemyManager.enemys.get(i).killed();
 						return true;
 				}	

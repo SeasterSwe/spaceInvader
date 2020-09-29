@@ -3,7 +3,7 @@ public class Player {
 	PVector velocity = new PVector(0, 0);
 	PVector acceleration = new PVector();
 	PlayerProjectile playerProjectile;
-	int health = 3;
+	int lives = 3;
 	float speed = 100;
 	float maxSpeed = 12;
 	float sizeW = 50;
@@ -34,6 +34,10 @@ public class Player {
 		if (position.x > width - sizeW) {
 			position.x = width - sizeW; 
 		}
+		
+	}
+	void killed() {
+
 	} 
 
 	void projectile() {
