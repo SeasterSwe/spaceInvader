@@ -11,7 +11,8 @@ public class PlayerProjectile  {
 		
 	}
 	void draw(){
-
+		fill(165,165,165);
+		stroke(165,165,165);
 		rect(position.x, position.y, sizeW, sizeH, 10);
 		
 		
@@ -21,7 +22,7 @@ public class PlayerProjectile  {
 		if(bullets.size() >= 1) {
 			for (int i = 0; i < bullets.size(); ++i) {
 
-				if ((position.x >= bullets.get(i).pos.x && position.x <= bullets.get(i).pos.x + bullets.get(i).sizeW) || (position.x + sizeW >= bullets.get(i).pos.x && position.x + sizeW <= bullets.get(i).pos.x + bullets.get(i).sizeW)) {
+				if ((position.x >= bullets.get(i).pos.x - 5 && position.x <= bullets.get(i).pos.x + bullets.get(i).sizeW + 5) || (position.x + sizeW >= bullets.get(i).pos.x - 5 && position.x + sizeW <= bullets.get(i).pos.x + bullets.get(i).sizeW + 5)) {
 					
 					if (position.y > bullets.get(i).pos.y && position.y < bullets.get(i).pos.y + bullets.get(i).sizeH) {
 						bullets.get(i).remove();
