@@ -18,9 +18,6 @@ class Enemy
 	}
 	Enemy(float x, float y, float scoreGive)
 	{
-		//float redVal = random(80,250);
-		//float blueVal = random(40, 60);
-		//color c = color(redVal, 0, blueVal);
 		baseColor = color(16, 121, 23);
 		eyeColor = color(152, 196, 155);
 		
@@ -84,6 +81,7 @@ class Enemy
 	{
 		enemyManager.increaseSpeed();
 		score += amountToAddToScore;
+		explotions.add(new Explotion(pos.x,pos.y));
 		enemyManager.enemys.remove(this);
 	}
 
@@ -207,6 +205,8 @@ class EnemyProjectile
 
 	void remove()
 	{
+		//explotions.add(new Explotion(pos.x,pos.y));
+		muzzleFlashes.add(new MuzzleFlash(pos.x + sizeW/2, pos.y + sizeH - 5, 0.2f, color(255, 207, 0), 30));
 		enemyManager.shoot();
 		bullets.remove(this);
 	}
@@ -289,10 +289,104 @@ class EnemyManager
 	void shoot()
 	{
 		if(enemys.size() > 0)
-		{
+		{	
 			int r = (int)random(0, enemys.size());
 			PVector temp = enemys.get(r).pos;
+			//float s = enemys.get(r).eSize;
+			//muzzleFlashes.add(new MuzzleFlash(temp.x, temp.y + s, 0.3f, color(255,255,255,40)));
 			bullets.add(new EnemyProjectile(temp.x, temp.y));
+		}
+	}
+}
+
+//sätta ihop till effekt klass
+class Explotion
+{
+	color c;
+	float rad;
+	float maxRad;
+	float radPerFrame;
+	PVector pos;
+	float timeSpawned;
+	float duration;
+	boolean done = true;
+	Explotion(float x, float y)
+	{
+		done = false;
+		pos = new PVector(x,y);
+		c = color(255, 13, 0);
+		rad = 0;
+		maxRad = 40;
+		timeSpawned = millis();
+		duration = 0.5f * 1000;
+		radPerFrame = (maxRad/30)/0.5f;
+	}
+
+	void draw()
+	{
+		if(rad <= maxRad && done == false)
+		{
+			rad += radPerFrame;
+		}
+		else
+		{
+			done = true;
+			rad -= radPerFrame;
+		}
+
+		fill(c);
+		stroke(c);
+		ellipse(pos.x, pos.y, rad, rad);
+		
+		fill(color(255, 124, 0));
+		stroke(color(255, 124, 0));
+		ellipse(pos.x, pos.y, rad/1.5, rad/1.5);
+
+
+		fill(color(255, 180, 0));
+		stroke(color(255, 180, 0));
+		ellipse(pos.x, pos.y, rad/3, rad/3);
+		remove();
+	}
+
+	void remove()
+	{
+		if (millis() > timeSpawned + duration) {
+			explotions.remove(this);
+		}
+	}
+}
+
+class MuzzleFlash
+{
+	color c;
+	float timeOut;
+	PVector pos;
+	float timeSpawned;
+	float muzzleSizeX;
+	
+	MuzzleFlash(float x, float y, float t, color c, float sizeX)
+	{
+		pos = new PVector(x,y);
+		timeOut = t * 1000;
+		this.c = c;
+		timeSpawned = millis();
+		muzzleSizeX = sizeX;
+	}
+
+	void draw()
+	{
+		fill(c);
+		stroke(c);
+		rect(pos.x - muzzleSizeX/2, pos.y, muzzleSizeX, 2, 20);
+		//rect(pos.x, pos.y - muzzleSizeX/2, 2, muzzleSizeX, 20);
+		remove();
+	}
+
+	void remove()
+	{
+		if (millis() > timeSpawned + timeOut) {
+			muzzleFlashes.remove(this);
 		}
 	}
 }

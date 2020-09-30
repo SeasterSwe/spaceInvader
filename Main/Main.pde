@@ -2,8 +2,11 @@ float deltaTime;
 float time;
 Player player;
 Ui ui = new Ui();
+
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
+ArrayList<MuzzleFlash> muzzleFlashes = new ArrayList<MuzzleFlash>();
+ArrayList<Explotion> explotions = new ArrayList<Explotion>();
 
 RedShip redship;
 float timeToSpawnRedShip;
@@ -27,13 +30,16 @@ void draw() {
 	drawBullets();
 	player.update();
 	enemyManager.draw();
+
 	gameClearCheck();
 	ui.draw();
 
+	drawMuzzleFlashes();
 	restart();
 	time = currentTime;
 	if(redship != null)
 		redship.draw();
+
 	spawnRedShip();
 }
 
@@ -46,11 +52,26 @@ void drawBullets()
 	}
 }
 
+void drawMuzzleFlashes()
+{
+	//ska sätta ihop till effekts
+	if (muzzleFlashes.size() > 0) {
+		for (int i = 0; i < muzzleFlashes.size(); ++i) {
+			muzzleFlashes.get(i).draw();
+		}
+	}
+	if (explotions.size() > 0) {
+		for (int i = 0; i < explotions.size(); ++i) {
+			explotions.get(i).draw();
+		}
+		
+	}
+}
+
 void clearBackground()
 { 	//wowbagger
 	//Fill screen with rect, with alpha for cool effect.
 	fill(0, 0, 0, 80);
-	//stroke(0);
 	strokeWeight(1);
 	rect(-100, -110, width + 100, height + 300); 
 }
@@ -91,6 +112,9 @@ void restart()
 			alive = true;	
 			bullets.clear();
 			player = new Player();
+			if (bullets.size() == 0) {
+				enemyManager.shoot();
+			}
 		}
 	}
 	

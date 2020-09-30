@@ -56,6 +56,7 @@ public class Player {
 	void projectile() {
 		if (fire && playerProjectile == null) {
 		playerProjectile = new PlayerProjectile(position.x + sizeH, position.y);
+		muzzleFlashes.add(new MuzzleFlash(position.x + sizeW/2, position.y - sizeH/2 - 5, 0.15f, color(255), 25));
 	}
 		if (playerProjectile != null) {
 		playerProjectile.update();
