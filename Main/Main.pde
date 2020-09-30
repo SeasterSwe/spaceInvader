@@ -1,7 +1,7 @@
 float deltaTime;
 float time;
 Player player;
-
+Ui ui = new Ui();
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
 
@@ -18,26 +18,16 @@ void draw() {
 	clearBackground();
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
+
 	drawBullets();
 	player.update();
-	player.draw();
-
 	enemyManager.draw();
-	floorLine();
+	ui.draw();
 
-
-	gameOver();
-	typeScore();
+	restart();
 	time = currentTime;
 }
 
-void typeScore()
-{
-	textSize(15);
-	fill(249, 236, 194);
-	textAlign(LEFT);
-	text("Score: " + score,10,20);
-}
 
 void drawBullets()
 {
@@ -56,25 +46,6 @@ void clearBackground()
 	rect(-100, -110, width + 100, height + 300); 
 }
 
-void gameOver()
-{
-	if(!alive)
-	{
-		fill(210);
-		textSize(40);
-		textAlign(CENTER, CENTER);
-		text("Game over", width/2, height/2 -20);
-		if (keyPressed) {
-			restart();	
-		}
-	}
-}
-
-void floorLine()
-{
-	stroke(255, 146, 0);
-	line(0, player.position.y + player.sizeH, width, player.position.y + player.sizeH);
-}
 
 void spawnNewEnemys()
 {
@@ -83,9 +54,14 @@ void spawnNewEnemys()
 }
 void restart()
 {
-	score = 0;
-	spawnNewEnemys();
-	alive = true;	
-	bullets.clear();
-	player = new Player();
+	if (!alive) {
+		if (keyPressed) {
+			score = 0;
+			spawnNewEnemys();
+			alive = true;	
+			bullets.clear();
+			player = new Player();
+		}
+	}
+	
 }
