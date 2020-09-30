@@ -5,6 +5,7 @@ Player player;
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
 
+RedShip redship = new RedShip();
 static boolean alive = true;
 static int score = 0;
 void setup() {
@@ -24,11 +25,11 @@ void draw() {
 
 	enemyManager.draw();
 	floorLine();
-
-
+	gameClearCheck();
 	gameOver();
 	typeScore();
 	time = currentTime;
+	redship.draw();
 }
 
 void typeScore()
@@ -76,11 +77,21 @@ void floorLine()
 	line(0, player.position.y + player.sizeH, width, player.position.y + player.sizeH);
 }
 
+void gameClearCheck()
+{
+	if(enemyManager.enemys.size() < 1)
+	{
+		spawnNewEnemys();
+		enemyManager.maxSpeed += 1f;
+	}
+}
+
 void spawnNewEnemys()
 {
 	enemyManager = new EnemyManager();
 	enemyManager.spawnEnemys();
 }
+
 void restart()
 {
 	score = 0;

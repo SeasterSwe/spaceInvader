@@ -9,8 +9,13 @@ class Enemy
 	PVector oldPos = new PVector(); //för riktningsändring
 
 	float eSize = 20;
+	float eSizeY = 20;
 
 	float amountToAddToScore;
+	Enemy()
+	{
+		//behövdes för arv
+	}
 	Enemy(float x, float y, float scoreGive)
 	{
 		//float redVal = random(80,250);
@@ -31,9 +36,8 @@ class Enemy
 		fill(baseColor);
 		strokeWeight(3);
 		pos.x += x;
-		ellipse(pos.x, pos.y, eSize, eSize);
+		ellipse(pos.x, pos.y, eSize, eSizeY);
 		animation();
-
 	}
 
 	void animation()
@@ -80,7 +84,6 @@ class Enemy
 	{
 		enemyManager.increaseSpeed();
 		score += amountToAddToScore;
-		//println("amountToAddToScore: "+amountToAddToScore);
 		enemyManager.enemys.remove(this);
 	}
 
@@ -96,6 +99,49 @@ class Enemy
 			dirX = 1;
 			oldPos.x = pos.x;
 			enemyManager.moveDown(2);
+		}
+	}
+}
+
+class RedShip extends Enemy{
+
+	float speed;
+	float amountOfTimesToBounce = 2;
+	
+	RedShip()
+	{
+		eSizeY = 12;
+		pos = new PVector(eSize, eSizeY);
+		speed = 2.5f;
+		baseColor = color(250, 0, 18);
+		amountToAddToScore = 300;
+
+		float r = random(-1,2);
+		if (r > 0) 
+			pos.x = 800 - eSize/2 - 5;	//800 = wídth
+		else
+			pos.x = eSize/2 + 5;
+	
+	}
+
+	void draw()
+	{
+		super.draw(speed);
+	}
+
+	void boarderCheck()
+	{
+		if (pos.x > width - eSize/2 && amountOfTimesToBounce > 0)
+		{
+			pos.x = width - eSize/2 - 5;
+			speed *= -1;
+			amountOfTimesToBounce--;
+		}
+		else if(pos.x < eSize/2 && amountOfTimesToBounce > 0)
+		{
+			speed *= -1;
+			pos.x = eSize/2 + 5;
+			amountOfTimesToBounce--;
 		}
 	}
 }
@@ -245,11 +291,6 @@ class EnemyManager
 			int r = (int)random(0, enemys.size());
 			PVector temp = enemys.get(r).pos;
 			bullets.add(new EnemyProjectile(temp.x, temp.y));
-		}
-		else
-		{
-			spawnEnemys();
-			enemyManager.maxSpeed += 1f;
 		}
 	}
 }
