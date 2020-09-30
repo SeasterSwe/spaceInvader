@@ -5,14 +5,18 @@ Ui ui = new Ui();
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
 
-RedShip redship = new RedShip();
+RedShip redship;
+float timeToSpawnRedShip;
+
 static boolean alive = true;
 static int score = 0;
+
 void setup() {
 	frameRate(60);
 	size(800, 500);
 	player = new Player();
 	enemyManager.spawnEnemys();
+	timeToSpawnRedShip = 7000;
 }
 
 void draw() {
@@ -23,12 +27,14 @@ void draw() {
 	drawBullets();
 	player.update();
 	enemyManager.draw();
-	
+	gameClearCheck();
 	ui.draw();
 
 	restart();
 	time = currentTime;
-	redship.draw();
+	if(redship != null)
+		redship.draw();
+	spawnRedShip();
 }
 
 
@@ -54,6 +60,26 @@ void spawnNewEnemys()
 {
 	enemyManager = new EnemyManager();
 	enemyManager.spawnEnemys();
+}
+
+void gameClearCheck()
+{
+	if(enemyManager.enemys.size() < 1)
+	{
+		spawnNewEnemys();
+		enemyManager.maxSpeed += 1f;
+	}
+}
+
+void spawnRedShip()
+{
+	if (timeToSpawnRedShip < millis()) {
+		int b = int(random(1,4));
+		redship = new RedShip(b);
+		float r = random(24, 34);
+		r *= 1000;
+		timeToSpawnRedShip = millis() + r;
+	}
 }
 
 void restart()

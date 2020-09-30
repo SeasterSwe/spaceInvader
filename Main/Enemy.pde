@@ -106,10 +106,11 @@ class Enemy
 class RedShip extends Enemy{
 
 	float speed;
-	float amountOfTimesToBounce = 2;
+	int amountOfTimesToBounce = 2;
 	
-	RedShip()
+	RedShip(int bounces)
 	{
+		amountOfTimesToBounce = bounces;
 		eSizeY = 12;
 		pos = new PVector(eSize, eSizeY);
 		speed = 2.5f;
