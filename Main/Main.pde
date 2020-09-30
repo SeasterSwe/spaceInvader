@@ -76,12 +76,16 @@ void floorLine()
 	line(0, player.position.y + player.sizeH, width, player.position.y + player.sizeH);
 }
 
+void spawnNewEnemys()
+{
+	enemyManager = new EnemyManager();
+	enemyManager.spawnEnemys();
+}
 void restart()
 {
 	score = 0;
-	enemyManager = new EnemyManager();
+	spawnNewEnemys();
 	alive = true;	
 	bullets.clear();
-	enemyManager.spawnEnemys();
 	player = new Player();
 }

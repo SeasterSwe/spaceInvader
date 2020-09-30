@@ -174,6 +174,7 @@ class EnemyManager
 	float speedMag = 1; // lite oklart ska inte ljuga
 	float currentSpeed = 1;
 	float speedIncreasePerDeath;
+	float maxSpeed = 3f;
 
 	ArrayList<Enemy> enemys = new ArrayList<Enemy>();
 	boolean canChange = true;
@@ -188,7 +189,7 @@ class EnemyManager
 		float xDist = (width - xStart * 2)/xRow;
 		float yDist = 25; //bör va lite större än eSize
 
-		speedIncreasePerDeath = 3f/xRow/yRow;
+		speedIncreasePerDeath = maxSpeed/xRow/yRow;
 
 		for (int x = 0; x < xRow; ++x) {
 			for (int y = 0; y < yRow; ++y) {
@@ -244,6 +245,11 @@ class EnemyManager
 			int r = (int)random(0, enemys.size());
 			PVector temp = enemys.get(r).pos;
 			bullets.add(new EnemyProjectile(temp.x, temp.y));
+		}
+		else
+		{
+			spawnEnemys();
+			enemyManager.maxSpeed += 1f;
 		}
 	}
 }

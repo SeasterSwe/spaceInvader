@@ -22,10 +22,8 @@ public class Player {
 	}
 
 	void draw() {
-		fill(playerColor);
-		stroke(color(80,30,200));
-		rect(position.x, position.y, sizeW, sizeH , 10);
-		rect(position.x +20, position.y - 15, 10, 15, 10, 10, 0,0);
+		playerShape(position.x, position.y);
+		visualizeLives();
 	}
 	void playerCollision() {
 		if (position.x < 0) {
