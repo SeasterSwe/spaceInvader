@@ -1,13 +1,14 @@
 public class Player {
-	PVector position = new PVector(100, height - 100);
-	PVector velocity = new PVector(0, 0);
-	PVector acceleration = new PVector();
-	PlayerProjectile playerProjectile;
 	int lives = 3;
 	float speed = 100;
 	float maxSpeed = 12;
 	float sizeW = 50;
 	float sizeH = 25;
+	PVector position = new PVector(width / 2 -sizeW / 2, height - 100);
+	PVector velocity = new PVector(0, 0);
+	PVector acceleration = new PVector();
+	PlayerProjectile playerProjectile;
+	
 
 	color playerColor = color(60, 30,150);
 
@@ -18,12 +19,12 @@ public class Player {
 	position.add(movementInput().mult( speed * deltaTime));
 	playerCollision();
 	projectile();
-	
+	draw();
 	}
 
 	void draw() {
 		playerShape(position.x, position.y);
-		visualizeLives();
+		
 	}
 	void playerCollision() {
 		if (position.x < 0) {
@@ -42,12 +43,7 @@ public class Player {
 		}
 	} 
 
-	void visualizeLives()
-	{
-		for (int i = 0; i < lives; ++i) {
-			playerShape(10 + 70 * i, height - sizeH);
-		}
-	}
+	
 
 	void playerShape(float x, float y)
 	{
