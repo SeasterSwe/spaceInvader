@@ -185,6 +185,25 @@ class EnemyProjectile
 
 	void collison()
 	{
+
+		if (shields.size() >= 1) {
+			for (int i = 0; i < shields.size(); i++) {
+				float shieldX = shields.get(i).pos.x;
+				float shieldY = shields.get(i).pos.y;
+				int shieldW = shields.get(i).sizeW;
+				int shieldH = shields.get(i).sizeH;
+			
+			if ((pos.x >  shieldX && pos.x < shieldX + shieldW) ||  (pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
+				println("hello");
+					if (pos.y + sizeH < shieldY + shieldH && pos.y + sizeH >shieldY) {
+						shields.remove(i);
+						remove();
+						break;
+					}
+				}	
+		}	
+	}
+
 		float x1 = player.position.x;
 		float x2 = player.sizeW + x1;
 		if(abs(player.position.y - pos.y) < player.sizeH - 10)

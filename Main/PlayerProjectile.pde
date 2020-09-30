@@ -19,6 +19,23 @@ public class PlayerProjectile  {
 	}
 	boolean collision() {
 
+		if (shields.size() >= 1) {
+			for (int i = 0; i < shields.size(); i++) {
+				float shieldX = shields.get(i).pos.x;
+				float shieldY = shields.get(i).pos.y;
+				int shieldW = shields.get(i).sizeW;
+				int shieldH = shields.get(i).sizeH;
+			
+			if ((position.x >  shieldX && position.x < shieldX + shieldW) ||  (position.x + sizeW >  shieldX && position.x + sizeW < shieldX + shieldW)) {
+				println("hello");
+					if (position.y < shieldY + shieldH && position.y >shieldY) {
+						shields.remove(i);
+						return true;
+					}
+				}	
+		}	
+	}
+
 		if(bullets.size() >= 1) {
 			for (int i = 0; i < bullets.size(); ++i) {
 

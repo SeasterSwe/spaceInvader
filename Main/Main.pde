@@ -5,11 +5,15 @@ Ui ui = new Ui();
 
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
+
 ArrayList<MuzzleFlash> muzzleFlashes = new ArrayList<MuzzleFlash>();
 ArrayList<Explotion> explotions = new ArrayList<Explotion>();
 
 RedShip redship;
 float timeToSpawnRedShip;
+
+
+ArrayList<Shield> shields = new ArrayList<Shield>();
 
 static boolean alive = true;
 static int score = 0;
@@ -19,7 +23,11 @@ void setup() {
 	size(800, 500);
 	player = new Player();
 	enemyManager.spawnEnemys();
+
 	timeToSpawnRedShip = 7000;
+
+	createShields();
+
 }
 
 void draw() {
@@ -31,10 +39,16 @@ void draw() {
 	player.update();
 	enemyManager.draw();
 
+
 	gameClearCheck();
-	ui.draw();
+	
 
 	drawMuzzleFlashes();
+
+	drawSheilds();
+	ui.draw();
+	//shield.draw();
+
 	restart();
 	time = currentTime;
 	if(redship != null)
@@ -52,6 +66,7 @@ void drawBullets()
 	}
 }
 
+
 void drawMuzzleFlashes()
 {
 	//ska sätta ihop till effekts
@@ -64,7 +79,41 @@ void drawMuzzleFlashes()
 		for (int i = 0; i < explotions.size(); ++i) {
 			explotions.get(i).draw();
 		}
-		
+}
+}		
+
+void createShields() {
+	int sizeW = 15;
+	int sizeH = 10;
+	for(int j = 1; j <= 4; j++) {
+			int x = width / 5 * j - 4 * sizeW;
+			int y = 140;
+
+			for(int i = 1; i <=21; i++) {
+				    shields.add(new Shield(x, height - y));
+				if (i % 3 == 0 && i != 0) {
+
+					x += sizeW ; 
+					
+					if (i < 12) {
+						y-= sizeH * 2;
+					}
+					else {
+					y-= sizeH * 4;
+					}
+				}
+				
+				y += sizeH;
+			}
+		}
+		println(shields.size());
+}
+void drawSheilds() {
+	fill(0);
+	stroke(152, 196, 155);
+	for (int i = 0; i < shields.size(); i++) {
+		rect(shields.get(i).pos.x, shields.get(i).pos.y, shields.get(i).sizeW, shields.get(i).sizeH);
+
 	}
 }
 
