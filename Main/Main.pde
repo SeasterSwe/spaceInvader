@@ -106,7 +106,7 @@ void createShields() {
 				y += sizeH;
 			}
 		}
-		println(shields.size());
+		
 }
 void drawSheilds() {
 	fill(0);
