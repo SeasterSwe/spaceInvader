@@ -64,6 +64,7 @@ public class Player {
 		playerProjectile.update();
 		playerProjectile.draw();
 		if(playerProjectile.collision()) {
+			effekts.add(new Explotion(playerProjectile.position.x,playerProjectile.position.y));
 			playerProjectile = null;
 		}
 	}

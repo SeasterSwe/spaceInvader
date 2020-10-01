@@ -1,6 +1,6 @@
 public class PlayerProjectile  {
 	PVector position;
-	float speed = 200;
+	float speed = 300;
 	float sizeW = 4;
 	float sizeH = 10;
 	public PlayerProjectile (float x, float y) {

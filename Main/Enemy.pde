@@ -83,7 +83,7 @@ class Enemy
 	{
 		enemyManager.increaseSpeed();
 		score += amountToAddToScore;
-		effekts.add(new Explotion(pos.x,pos.y));
+		//effekts.add(new Explotion(pos.x,pos.y));
 		enemyManager.enemys.remove(this);
 	}
 

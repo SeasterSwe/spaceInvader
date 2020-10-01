@@ -34,7 +34,7 @@ void getSounds()
 
 	shootSound.amp(0.005);
 	dmgTakenSound.amp(0.05);
-	explotionSound.amp(0.005);
+	explotionSound.amp(0.008);
 	backSound.amp(0.005);
 	backSound.loop();
 }

@@ -40,7 +40,7 @@ class Explotion extends Effekt
 		pos = new PVector(x,y);
 		c = color(255, 13, 0);
 		rad = 0;
-		maxRad = 40;
+		maxRad = 25;
 
 		timeSpawned = millis();
 		timeOut = 0.5f * 1000;
