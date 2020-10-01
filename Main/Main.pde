@@ -6,8 +6,7 @@ Ui ui = new Ui();
 EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
 
-ArrayList<MuzzleFlash> muzzleFlashes = new ArrayList<MuzzleFlash>();
-ArrayList<Explotion> explotions = new ArrayList<Explotion>();
+ArrayList<Effekt> effekts = new ArrayList<Effekt>();
 
 RedShip redship;
 float timeToSpawnRedShip;
@@ -43,7 +42,7 @@ void draw() {
 	gameClearCheck();
 	
 
-	drawMuzzleFlashes();
+	drawEffekts();
 
 	drawSheilds();
 	ui.draw();
@@ -67,20 +66,14 @@ void drawBullets()
 }
 
 
-void drawMuzzleFlashes()
+void drawEffekts()
 {
-	//ska sätta ihop till effekts
-	if (muzzleFlashes.size() > 0) {
-		for (int i = 0; i < muzzleFlashes.size(); ++i) {
-			muzzleFlashes.get(i).draw();
-		}
+	if (effekts.size() > 0) {
+		for (int i = 0; i < effekts.size(); ++i) {
+			effekts.get(i).draw();
+		}		
 	}
-	if (explotions.size() > 0) {
-		for (int i = 0; i < explotions.size(); ++i) {
-			explotions.get(i).draw();
-		}
-}
-}		
+}	
 
 void createShields() {
 	int sizeW = 15;

@@ -81,7 +81,7 @@ class Enemy
 	{
 		enemyManager.increaseSpeed();
 		score += amountToAddToScore;
-		explotions.add(new Explotion(pos.x,pos.y));
+		effekts.add(new Explotion(pos.x,pos.y));
 		enemyManager.enemys.remove(this);
 	}
 
@@ -225,7 +225,7 @@ class EnemyProjectile
 	void remove()
 	{
 		//explotions.add(new Explotion(pos.x,pos.y));
-		muzzleFlashes.add(new MuzzleFlash(pos.x + sizeW/2, pos.y + sizeH - 5, 0.2f, color(255, 207, 0), 30));
+		effekts.add(new MuzzleFlash(pos.x + sizeW/2, pos.y + sizeH - 5, 0.2f, color(255, 207, 0), 30));
 		enemyManager.shoot();
 		bullets.remove(this);
 	}
@@ -318,16 +318,37 @@ class EnemyManager
 	}
 }
 
-//sätta ihop till effekt klass
-class Explotion
+class Effekt
+{
+	//kan säkert fixas till
+	Effekt()
+	{
+
+	}
+
+	void draw()
+	{
+
+	}
+
+	void remove(float dur)
+	{	
+		if (millis() > dur) {
+			effekts.remove(this);
+		}
+	}
+}
+class Explotion extends Effekt
 {
 	color c;
 	float rad;
 	float maxRad;
 	float radPerFrame;
 	PVector pos;
+	
 	float timeSpawned;
-	float duration;
+	float timeOut;
+	
 	boolean done = true;
 	Explotion(float x, float y)
 	{
@@ -336,8 +357,10 @@ class Explotion
 		c = color(255, 13, 0);
 		rad = 0;
 		maxRad = 40;
+
 		timeSpawned = millis();
-		duration = 0.5f * 1000;
+		timeOut = 0.5f * 1000;
+
 		radPerFrame = (maxRad/30)/0.5f;
 	}
 
@@ -365,31 +388,26 @@ class Explotion
 		fill(color(255, 180, 0));
 		stroke(color(255, 180, 0));
 		ellipse(pos.x, pos.y, rad/3, rad/3);
-		remove();
-	}
-
-	void remove()
-	{
-		if (millis() > timeSpawned + duration) {
-			explotions.remove(this);
-		}
+		super.remove(timeSpawned + timeOut);
 	}
 }
 
-class MuzzleFlash
+class MuzzleFlash extends Effekt
 {
 	color c;
+	
 	float timeOut;
-	PVector pos;
 	float timeSpawned;
+	
+	PVector pos;
 	float muzzleSizeX;
 	
 	MuzzleFlash(float x, float y, float t, color c, float sizeX)
 	{
 		pos = new PVector(x,y);
-		timeOut = t * 1000;
+		this.timeOut = t * 1000;
 		this.c = c;
-		timeSpawned = millis();
+		this.timeSpawned = millis();
 		muzzleSizeX = sizeX;
 	}
 
@@ -398,14 +416,6 @@ class MuzzleFlash
 		fill(c);
 		stroke(c);
 		rect(pos.x - muzzleSizeX/2, pos.y, muzzleSizeX, 2, 20);
-		//rect(pos.x, pos.y - muzzleSizeX/2, 2, muzzleSizeX, 20);
-		remove();
-	}
-
-	void remove()
-	{
-		if (millis() > timeSpawned + timeOut) {
-			muzzleFlashes.remove(this);
-		}
+		super.remove(timeSpawned + timeOut);
 	}
 }
