@@ -138,6 +138,8 @@ void gameClearCheck()
 	{
 		spawnNewEnemys();
 		enemyManager.maxSpeed += 1f;
+		shields.clear();
+		createShields();
 	}
 }
 
@@ -156,6 +158,8 @@ void restart()
 {
 	if (!alive) {
 		if (keyPressed) {
+			shields.clear();
+			createShields();
 			score = 0;
 			spawnNewEnemys();
 			alive = true;	
