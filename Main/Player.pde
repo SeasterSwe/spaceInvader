@@ -51,12 +51,15 @@ public class Player {
 		fill(playerColor);
 		stroke(color(80,30,200));
 		rect(x, y, sizeW, sizeH , 10);
-		rect(x +20, y - 15, 10, 15, 10, 10, 0,0);
+		rect(x + sizeW/2 - 5, y - 15, 10, 15, 10, 10, 0,0);
+		rect(x + sizeW/2 - 8, y - 15, 16, 6, 10);
+		fill(60);
+		stroke(70);
 	}
 
 	void projectile() {
 		if (fire && playerProjectile == null) {
-		playerProjectile = new PlayerProjectile(position.x + sizeH, position.y);
+		playerProjectile = new PlayerProjectile(position.x + 2.5 + sizeW/2 - playerProjectileSizeW/2, position.y - playerProjectileSizeH);
 		effekts.add(new MuzzleFlash(position.x + sizeW/2, position.y - sizeH/2 - 5, 0.15f, color(255), 25));
 		shootSound.play();
 	}

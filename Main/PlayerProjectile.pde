@@ -1,13 +1,19 @@
+
+static float playerProjectileSpeed = 300;
+static float playerProjectileSizeW = 4;
+static float playerProjectileSizeH = 10;
 public class PlayerProjectile  {
 	PVector position;
-	float speed = 300;
+	//float speed = 300;
 	float sizeW = 4;
 	float sizeH = 10;
 	public PlayerProjectile (float x, float y) {
 		position = new PVector(x - 2, y-10);
+		sizeW = playerProjectileSizeW;
+		sizeH = playerProjectileSizeH;
 	}
 	void update(){
-		position.y -= speed * deltaTime;
+		position.y -= playerProjectileSpeed * deltaTime;
 		
 	}
 	void draw(){

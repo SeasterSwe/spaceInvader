@@ -114,7 +114,7 @@ class RedShip extends Enemy{
 		eSizeY = 12;
 		pos = new PVector(eSize, eSizeY);
 		speed = 2.5f;
-		baseColor = color(255, 13, 0);
+		baseColor = color(255, 186, 48);
 		eyeColor = color(7);
 		amountToAddToScore = 300;
 

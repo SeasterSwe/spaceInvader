@@ -10,7 +10,7 @@ ArrayList<Effekt> effekts = new ArrayList<Effekt>();
 ArrayList<Star> stars = new ArrayList<Star>();
 RedShip redship;
 float timeToSpawnRedShip;
-
+ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
 
 ArrayList<Shield> shields = new ArrayList<Shield>();
 
@@ -22,17 +22,19 @@ SoundFile backSound;
 SoundFile explotionSound;
 SoundFile dmgTakenSound;
 SoundFile shootSound;
+SoundFile powerUpSound;
 
 void getSounds()
 {
 
+	powerUpSound = new SoundFile(this, "PowerUp.wav");
 	explotionSound = new SoundFile(this, "Explotion.wav");
 	dmgTakenSound = new SoundFile(this, "Hurt.wav");
 	shootSound = new SoundFile(this, "Shoot.wav");
 	backSound = new SoundFile(this, "Backround.mp3");
 
-
-	shootSound.amp(0.005);
+	powerUpSound.amp(0.005);
+	shootSound.amp(0.01);
 	dmgTakenSound.amp(0.05);
 	explotionSound.amp(0.008);
 	backSound.amp(0.005);
@@ -52,6 +54,10 @@ void setup() {
    		stars.add(new Star());
    	}
 
+   	powerUps.add(new SpeedBoost(10));
+   	powerUps.add(new ExtraLife());
+	powerUps.add(new LargerBullets(20));
+
 	createShields();
 	getSounds();
 }
@@ -69,6 +75,12 @@ void draw() {
 	player.update();
 	enemyManager.draw();
 
+	if(powerUps.size() > 0)
+	{
+		for (int i = 0; i < powerUps.size(); ++i) {
+			powerUps.get(i).draw();	
+		}
+	}
 
 	gameClearCheck();
 	
