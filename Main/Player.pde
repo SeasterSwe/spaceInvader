@@ -37,6 +37,7 @@ public class Player {
 	}
 	void killed() {
 		lives--;
+		dmgTakenSound.play();
 		if(lives <= 0)
 		{
 			alive = false;
@@ -57,6 +58,7 @@ public class Player {
 		if (fire && playerProjectile == null) {
 		playerProjectile = new PlayerProjectile(position.x + sizeH, position.y);
 		effekts.add(new MuzzleFlash(position.x + sizeW/2, position.y - sizeH/2 - 5, 0.15f, color(255), 25));
+		shootSound.play();
 	}
 		if (playerProjectile != null) {
 		playerProjectile.update();

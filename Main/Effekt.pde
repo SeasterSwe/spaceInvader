@@ -35,6 +35,7 @@ class Explotion extends Effekt
 	boolean done = true;
 	Explotion(float x, float y)
 	{
+		explotionSound.play();
 		done = false;
 		pos = new PVector(x,y);
 		c = color(255, 13, 0);

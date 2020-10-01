@@ -17,9 +17,32 @@ ArrayList<Shield> shields = new ArrayList<Shield>();
 static boolean alive = true;
 static int score = 0;
 
+import processing.sound.*;
+SoundFile backSound;
+SoundFile explotionSound;
+SoundFile dmgTakenSound;
+SoundFile shootSound;
+
+void getSounds()
+{
+
+	explotionSound = new SoundFile(this, "Explotion.wav");
+	dmgTakenSound = new SoundFile(this, "Hurt.wav");
+	shootSound = new SoundFile(this, "Shoot.wav");
+	backSound = new SoundFile(this, "Backround.mp3");
+
+
+	shootSound.amp(0.005);
+	dmgTakenSound.amp(0.05);
+	explotionSound.amp(0.005);
+	backSound.amp(0.005);
+	backSound.loop();
+}
+
 void setup() {
 	frameRate(60);
 	size(800, 500);
+
 	player = new Player();
 	enemyManager.spawnEnemys();
 
@@ -30,7 +53,7 @@ void setup() {
    	}
 
 	createShields();
-
+	getSounds();
 }
 
 void draw() {
