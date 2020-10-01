@@ -7,7 +7,7 @@ EnemyManager enemyManager = new EnemyManager();
 ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
 
 ArrayList<Effekt> effekts = new ArrayList<Effekt>();
-
+ArrayList<Star> stars = new ArrayList<Star>();
 RedShip redship;
 float timeToSpawnRedShip;
 
@@ -25,6 +25,10 @@ void setup() {
 
 	timeToSpawnRedShip = 7000;
 
+	for(int i = 1; i <= 30; i++){
+   		stars.add(new Star());
+   	}
+
 	createShields();
 
 }
@@ -33,6 +37,10 @@ void draw() {
 	clearBackground();
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
+
+	for (int i = 0; i < stars.size(); ++i) {
+		stars.get(i).draw();
+	}
 
 	drawBullets();
 	player.update();
@@ -64,7 +72,6 @@ void drawBullets()
 		bullets.get(i).draw();
 	}
 }
-
 
 void drawEffekts()
 {

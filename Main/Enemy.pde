@@ -16,6 +16,7 @@ class Enemy
 	{
 		//behövdes för arv
 	}
+
 	Enemy(float x, float y, float scoreGive)
 	{
 		baseColor = color(16, 121, 23);
@@ -194,7 +195,6 @@ class EnemyProjectile
 				int shieldH = shields.get(i).sizeH;
 			
 			if ((pos.x >  shieldX && pos.x < shieldX + shieldW) ||  (pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
-				println("hello");
 					if (pos.y + sizeH < shieldY + shieldH && pos.y + sizeH >shieldY) {
 						shields.remove(i);
 						remove();
@@ -419,3 +419,45 @@ class MuzzleFlash extends Effekt
 		super.remove(timeSpawned + timeOut);
 	}
 }
+
+class Star extends Effekt{
+  
+  //kopierad rakt av, några tweaks
+  //https://www.openprocessing.org/sketch/65037/#
+  int xPos, yPos, starSize;
+  float flickerRate, light;
+  boolean rise;
+  
+  Star()
+  {
+    flickerRate = random(2,5); 
+    starSize = int(random(2,5));
+    xPos = int(random(0,width - starSize));
+    yPos = int(random(0,height/3 - starSize));
+    light = random(10,256);
+    rise = true;
+  }
+  void draw(){ 
+    if(light >= 245){
+      rise = false;
+    }
+    if(light <= 10){
+      flickerRate = random(2,5);
+      starSize = int(random(2,5));
+      rise = true;
+      xPos = int(random(0,width - starSize));
+      yPos = int(random(0,height/3 - starSize));
+    }
+    if(rise == true){
+      light +=flickerRate;
+    }
+    if(rise == false){
+      light -= flickerRate;
+    }
+    fill(light);
+    noStroke();
+    rect(xPos, yPos,starSize,starSize);
+  }
+}
+
+      
