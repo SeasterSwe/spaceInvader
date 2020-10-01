@@ -27,7 +27,7 @@ public class PlayerProjectile  {
 				int shieldH = shields.get(i).sizeH;
 			
 			if ((position.x >  shieldX && position.x < shieldX + shieldW) ||  (position.x + sizeW >  shieldX && position.x + sizeW < shieldX + shieldW)) {
-				println("hello");
+				
 					if (position.y < shieldY + shieldH && position.y >shieldY) {
 						shields.remove(i);
 						return true;
@@ -52,11 +52,12 @@ public class PlayerProjectile  {
 			}
 		}
 		for (int i = 0; i < enemyManager.enemys.size(); ++i) {
+			float radiusEnemy = enemyManager.enemys.get(i).eSize / 2;
 			float enemyXPos = enemyManager.enemys.get(i).pos.x;
 			float enemyYPos = enemyManager.enemys.get(i).pos.y;
 		
-			if (position.x + sizeW > enemyXPos && position.x < enemyXPos + enemyManager.enemys.get(i).eSize ) {
-				if (position.y + sizeH > enemyYPos && position.y + sizeH < enemyYPos + enemyManager.enemys.get(i).eSize ) {
+			if ((position.x  > enemyXPos - radiusEnemy && position.x < enemyXPos + radiusEnemy) || (position.x + sizeW > enemyXPos - radiusEnemy && position.x + sizeW < enemyXPos + radiusEnemy)) {
+				if ((position.y > enemyYPos - radiusEnemy && position.y  < enemyYPos + radiusEnemy) || (position.y + sizeH > enemyYPos - radiusEnemy && position.y + sizeH  < enemyYPos + radiusEnemy)) {
 						enemyManager.enemys.get(i).killed();
 						return true;
 				}	
