@@ -3,13 +3,13 @@
 //Jakob
 class Enemy {
 	color baseColor;
-	color eyeColor;
+	color secondColor;
 
 	PVector pos;
 	PVector oldPos = new PVector(); //för riktningsändring
 
-	float eSize = 20;
-	float eSizeY = 20;
+	float sizeW = 20;
+	float sizeH = 20;
 
 	float amountToAddToScore;
 
@@ -18,7 +18,7 @@ class Enemy {
 
 	Enemy(float x, float y, float scoreGive) {
 		baseColor = color(16, 121, 23);
-		eyeColor = color(152, 196, 155);
+		secondColor = color(152, 196, 155);
 		
 		ellipseMode(CENTER);
 		pos = new PVector(x,y);
@@ -31,7 +31,7 @@ class Enemy {
 		fill(baseColor);
 		strokeWeight(3);
 		pos.x += x;
-		ellipse(pos.x, pos.y, eSize, eSizeY);
+		ellipse(pos.x, pos.y, sizeW, sizeH);
 		animation();
 	}
 
@@ -47,28 +47,28 @@ class Enemy {
 	}
 
 	void eyes() {
-        stroke(eyeColor);
-        fill(eyeColor);
+        stroke(secondColor);
+        fill(secondColor);
         strokeWeight(2);
         line(-6, -6, -2, -5);
         line(6, -6, 2, -5); 
-        ellipse(eSize/4, -eSize/4, 4, 2);
-        ellipse(-eSize/4, -eSize/4, 4, 2);
+        ellipse(sizeW/4, -sizeW/4, 4, 2);
+        ellipse(-sizeW/4, -sizeW/4, 4, 2);
 	}
 
 	void legs(float length, float legSpeed) {
 		float f = sin(frameCount * legSpeed);
 		strokeWeight(3);
 		stroke(baseColor);
-		line(-eSize/2, eSize/2, -eSize + f * 6f, length + f * 6f);
-		line(eSize/2, eSize/2, eSize + f * 6f, length + f * 6f);
+		line(-sizeW/2, sizeH/2, -sizeW + f * 6f, length + f * 6f);
+		line(sizeW/2, sizeH/2, sizeW + f * 6f, length + f * 6f);
 	}
 
 	void mouth() {
-		stroke(eyeColor);
+		stroke(secondColor);
 		noFill();
 		rotate(180);
-		arc(-8, -8, eSize/2, eSize/2, -0.2, 1.6);
+		arc(-8, -8, sizeW/2, sizeW/2, -0.2, 1.6);
 	}
 
 	void killed() {
@@ -79,12 +79,12 @@ class Enemy {
 	}
 
 	void boarderCheck() {
-		if (pos.x > width - (eSize * 2)) {
+		if (pos.x > width - (sizeW * 2)) {
 			dirX = -1;
 			oldPos.x = pos.x;
 			enemyManager.moveDown(2);
 		}
-		else if(pos.x < eSize*2) {
+		else if(pos.x < sizeW*2) {
 			dirX = 1;
 			oldPos.x = pos.x;
 			enemyManager.moveDown(2);
@@ -99,18 +99,18 @@ class RedShip extends Enemy{
 	
 	RedShip(int bounces) {
 		amountOfTimesToBounce = bounces;
-		eSizeY = 12;
-		pos = new PVector(eSize, eSizeY * 2);
+		sizeH = 12;
+		pos = new PVector(sizeW, sizeH * 2);
 		speed = 2.5f;
 		baseColor = color(255, 186, 48);
-		eyeColor = color(7);
+		secondColor = color(7);
 		amountToAddToScore = 300;
 
 		float r = random(-1,2);
 		if (r > 0) 
-			pos.x = 800 - eSize/2 - 5;	//800 = wídth
+			pos.x = 800 - sizeW/2 - 5;	//800 = wídth
 		else
-			pos.x = eSize/2 + 5;
+			pos.x = sizeW/2 + 5;
 	
 	}
 
@@ -119,14 +119,14 @@ class RedShip extends Enemy{
 	}
 
 	void boarderCheck() {
-		if (pos.x > width - eSize/2 && amountOfTimesToBounce > 0) {
-			pos.x = width - eSize/2 - 5;
+		if (pos.x > width - sizeW/2 && amountOfTimesToBounce > 0) {
+			pos.x = width - sizeW/2 - 5;
 			speed *= -1;
 			amountOfTimesToBounce--;
 		}
-		else if(pos.x < eSize/2 && amountOfTimesToBounce > 0) {
+		else if(pos.x < sizeW/2 && amountOfTimesToBounce > 0) {
 			speed *= -1;
-			pos.x = eSize/2 + 5;
+			pos.x = sizeW/2 + 5;
 			amountOfTimesToBounce--;
 		}
 	}
@@ -147,11 +147,11 @@ class EnemyProjectile {
 		
 		float f = sin(frameCount * 0.2);
 		
-		stroke(206, 176, 0); //stor
+		stroke(206, 176, 0); //stor svans
 		strokeWeight(4.5);
 		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 1.5, pos.y - 7);
 		
-		strokeWeight(2.5); //liten
+		strokeWeight(2.5); //liten eld
 		stroke(206, 121, 0);
 		line(pos.x + sizeW/2, pos.y, pos.x + sizeW/2 + f * 1.5, pos.y - 7);
 
@@ -176,7 +176,7 @@ class EnemyProjectile {
 				int shieldH = shields.get(i).sizeH;
 			
 			if ((pos.x >  shieldX && pos.x < shieldX + shieldW) ||
-			 (pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
+			 	(pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
 					if (pos.y + sizeH < shieldY + shieldH && pos.y + sizeH >shieldY) {
 						shields.remove(i);
 						remove();
