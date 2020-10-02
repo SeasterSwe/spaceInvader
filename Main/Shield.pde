@@ -4,8 +4,7 @@ public class Shield {
 	int sizeH = 10;
 	
 		Shield(float x, float y) {
-			pos = new PVector(x, y);
-				
+			pos = new PVector(x, y);		
 		}
 		
 }

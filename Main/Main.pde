@@ -41,7 +41,6 @@ void setup() {
    	powerUps.add(new SpeedBoost(10));
    	powerUps.add(new ExtraLife());
 	powerUps.add(new LargerBullets(20));
-
 	createShields();
 	getSounds();
 }

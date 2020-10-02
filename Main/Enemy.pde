@@ -16,8 +16,8 @@ class Enemy {
 	//behövdes för arv
 	Enemy(){}
 
-	Enemy(float x, float y, float scoreGive) {
-		baseColor = color(16, 121, 23);
+	Enemy(float x, float y, float scoreGive, color baseColor) {
+		this.baseColor = baseColor;
 		secondColor = color(152, 196, 155);
 		
 		ellipseMode(CENTER);

@@ -11,6 +11,7 @@ class Effekt {
 		}
 	}
 }
+
 class Explotion extends Effekt {
 	color c;
 	float rad;
@@ -64,7 +65,7 @@ class Explotion extends Effekt {
 }
 
 class MuzzleFlash extends Effekt {
-	
+
 	color c;
 	
 	float timeOut;
