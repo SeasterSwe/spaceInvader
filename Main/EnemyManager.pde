@@ -2,8 +2,7 @@
 
 //Jakob
 static float dirX = 1;
-class EnemyManager
-{
+class EnemyManager {
 	int xRow = 12;
 	int yRow = 8;
 
@@ -11,14 +10,13 @@ class EnemyManager
 	float currentSpeed = 1;
 	float speedIncreasePerDeath;
 	float maxSpeed = 3f;
+	float t;
 
 	ArrayList<Enemy> enemys = new ArrayList<Enemy>();
 	boolean canChange = true;
+	 //debugTimer sätter variablar till true
 
-	float t; //debugTimer sätter variablar till true
-
-	void spawnEnemys()
-	{
+	void spawnEnemys() {
 		float xStart = 100;
 		float yStart = 50;
 
@@ -36,10 +34,10 @@ class EnemyManager
 		shoot();
 	}
 	
-	void draw()
-	{
+	void draw() {
 		debugBoarder();
-		for (int i = 0; i < enemys.size(); ++i) {
+		for (int i = 0; i < enemys.size(); ++i) 
+		{
 			if(i == 0)
 			{
 				currentSpeed = dirX * speedMag; //speed = dirX * 2;
@@ -49,39 +47,32 @@ class EnemyManager
 	}
 
 	boolean moveDownActive = true;
-	void moveDown(float distDown)
-	{
-		if(moveDownActive)
-		{
+	void moveDown(float distDown) {		
+		if(moveDownActive) {
 			t = millis() + 1000;
 			moveDownActive = false;
+
 			for (int i = 0; i < enemys.size(); ++i) {
 				enemys.get(i).pos.y += distDown;
 			}
 		}
 	}
 
-	void debugBoarder()
-	{
+	void debugBoarder() {
 		if (t < millis()) {
 			enemyManager.canChange = true;
 			enemyManager.moveDownActive = true;
 		}
 	}
 
-	void increaseSpeed()
-	{
+	void increaseSpeed() {
 		speedMag += speedIncreasePerDeath;
 	}
 
-	void shoot()
-	{
-		if(enemys.size() > 0)
-		{	
+	void shoot() {		
+		if(enemys.size() > 0) {	
 			int r = (int)random(0, enemys.size());
 			PVector temp = enemys.get(r).pos;
-			//float s = enemys.get(r).eSize;
-			//muzzleFlashes.add(new MuzzleFlash(temp.x, temp.y + s, 0.3f, color(255,255,255,40)));
 			bullets.add(new EnemyProjectile(temp.x, temp.y));
 		}
 	}

@@ -1,21 +1,4 @@
-float deltaTime;
-float time;
-Player player;
-Ui ui = new Ui();
 
-EnemyManager enemyManager = new EnemyManager();
-ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
-
-ArrayList<Effekt> effekts = new ArrayList<Effekt>();
-ArrayList<Star> stars = new ArrayList<Star>();
-RedShip redship;
-float timeToSpawnRedShip;
-ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
-
-ArrayList<Shield> shields = new ArrayList<Shield>();
-
-static boolean alive = true;
-static int score = 0;
 
 import processing.sound.*;
 SoundFile backSound;
@@ -24,22 +7,23 @@ SoundFile dmgTakenSound;
 SoundFile shootSound;
 SoundFile powerUpSound;
 
-void getSounds()
-{
+EnemyManager enemyManager = new EnemyManager();
+ArrayList<EnemyProjectile> bullets = new ArrayList<EnemyProjectile>();
+ArrayList<Effekt> effekts = new ArrayList<Effekt>();
+ArrayList<Star> stars = new ArrayList<Star>();
+ArrayList<PowerUp> powerUps = new ArrayList<PowerUp>();
+ArrayList<Shield> shields = new ArrayList<Shield>();
 
-	powerUpSound = new SoundFile(this, "PowerUp.wav");
-	explotionSound = new SoundFile(this, "Explotion.wav");
-	dmgTakenSound = new SoundFile(this, "Hurt.wav");
-	shootSound = new SoundFile(this, "Shoot.wav");
-	backSound = new SoundFile(this, "Backround.mp3");
+RedShip redship;
+float timeToSpawnRedShip;
 
-	powerUpSound.amp(0.005);
-	shootSound.amp(0.01);
-	dmgTakenSound.amp(0.05);
-	explotionSound.amp(0.008);
-	backSound.amp(0.005);
-	backSound.loop();
-}
+static boolean alive = true;
+static int score = 0;
+
+float deltaTime;
+float time;
+Player player;
+Ui ui = new Ui();
 
 void setup() {
 	frameRate(60);
@@ -62,54 +46,71 @@ void setup() {
 	getSounds();
 }
 
+void getSounds() {
+	powerUpSound = new SoundFile(this, "PowerUp.wav");
+	explotionSound = new SoundFile(this, "Explotion.wav");
+	dmgTakenSound = new SoundFile(this, "Hurt.wav");
+	shootSound = new SoundFile(this, "Shoot.wav");
+	backSound = new SoundFile(this, "Backround.mp3");
+
+	powerUpSound.amp(0.005);
+	shootSound.amp(0.01);
+	dmgTakenSound.amp(0.05);
+	explotionSound.amp(0.008);
+	backSound.amp(0.005);
+	backSound.loop();
+}
+
 void draw() {
 	clearBackground();
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
 
+	player.update();
+
+	draws();
+
+	gameClearCheck();
+	
+	ui.draw();
+
+	spawnRedShip();
+
+	restart();
+	time = currentTime;
+}
+
+void draws() {
 	for (int i = 0; i < stars.size(); ++i) {
 		stars.get(i).draw();
 	}
 
 	drawBullets();
-	player.update();
 	enemyManager.draw();
+	drawPowerUps();
+	drawEffekts();
+	drawSheilds();
 
-	if(powerUps.size() > 0)
-	{
+	if(redship != null)
+		redship.draw();
+}
+
+void drawPowerUps() {
+	if(powerUps.size() > 0) {
 		for (int i = 0; i < powerUps.size(); ++i) {
 			powerUps.get(i).draw();	
 		}
 	}
-
-	gameClearCheck();
-	
-
-	drawEffekts();
-
-	drawSheilds();
-	ui.draw();
-	//shield.draw();
-
-	restart();
-	time = currentTime;
-	if(redship != null)
-		redship.draw();
-
-	spawnRedShip();
 }
 
-
-void drawBullets()
-{
+void drawBullets() {
 	if(bullets.size() > 0)
 	for (int i = 0; i < bullets.size(); ++i) {
 		bullets.get(i).draw();
 	}
 }
 
-void drawEffekts()
-{
+void drawEffekts() {
 	if (effekts.size() > 0) {
 		for (int i = 0; i < effekts.size(); ++i) {
 			effekts.get(i).draw();
@@ -143,34 +144,31 @@ void createShields() {
 		}
 		
 }
+
 void drawSheilds() {
 	fill(0);
 	stroke(152, 196, 155);
 	for (int i = 0; i < shields.size(); i++) {
 		rect(shields.get(i).pos.x, shields.get(i).pos.y, shields.get(i).sizeW, shields.get(i).sizeH);
-
 	}
 }
 
-void clearBackground()
-{ 	//wowbagger
-	//Fill screen with rect, with alpha for cool effect.
+//wowbagger
+//Fill screen with rect, with alpha for cool effect.
+void clearBackground() { 
 	fill(0, 0, 0, 80);
 	strokeWeight(1);
 	rect(-100, -110, width + 100, height + 300); 
 }
 
 
-void spawnNewEnemys()
-{
+void spawnNewEnemys() {
 	enemyManager = new EnemyManager();
 	enemyManager.spawnEnemys();
 }
 
-void gameClearCheck()
-{
-	if(enemyManager.enemys.size() < 1)
-	{
+void gameClearCheck() {
+	if(enemyManager.enemys.size() < 1) {
 		spawnNewEnemys();
 		enemyManager.maxSpeed += 1f;
 		shields.clear();
@@ -178,8 +176,7 @@ void gameClearCheck()
 	}
 }
 
-void spawnRedShip()
-{
+void spawnRedShip() {
 	if (timeToSpawnRedShip < millis()) {
 		int b = int(random(1,4));
 		redship = new RedShip(b);
@@ -189,8 +186,7 @@ void spawnRedShip()
 	}
 }
 
-void restart()
-{
+void restart() {
 	if (!alive) {
 		if (keyPressed) {
 			shields.clear();
@@ -204,6 +200,5 @@ void restart()
 				enemyManager.shoot();
 			}
 		}
-	}
-	
+	}	
 }

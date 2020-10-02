@@ -3,19 +3,13 @@
 //Jakob
 class Effekt
 {	
-	//kan säkert fixas till
-	Effekt()
-	{
-
-	}
-
+	
 	void draw()
 	{
 
 	}
 
-	void remove(float dur)
-	{	
+	void remove(float dur) {	
 		if (millis() > dur) {
 			effekts.remove(this);
 		}
@@ -33,8 +27,8 @@ class Explotion extends Effekt
 	float timeOut;
 	
 	boolean done = true;
-	Explotion(float x, float y)
-	{
+
+	Explotion(float x, float y) {
 		explotionSound.play();
 		done = false;
 		pos = new PVector(x,y);
@@ -48,14 +42,12 @@ class Explotion extends Effekt
 		radPerFrame = (maxRad/30)/0.5f;
 	}
 
-	void draw()
-	{
-		if(rad <= maxRad && done == false)
-		{
+	void draw() {
+
+		if(rad <= maxRad && done == false) {
 			rad += radPerFrame;
 		}
-		else
-		{
+		else {
 			done = true;
 			rad -= radPerFrame;
 		}
@@ -86,8 +78,7 @@ class MuzzleFlash extends Effekt
 	PVector pos;
 	float muzzleSizeX;
 	
-	MuzzleFlash(float x, float y, float t, color c, float sizeX)
-	{
+	MuzzleFlash(float x, float y, float t, color c, float sizeX) {
 		pos = new PVector(x,y);
 		this.timeOut = t * 1000;
 		this.c = c;
@@ -95,8 +86,7 @@ class MuzzleFlash extends Effekt
 		muzzleSizeX = sizeX;
 	}
 
-	void draw()
-	{
+	void draw() {
 		fill(c);
 		stroke(c);
 		rect(pos.x - muzzleSizeX/2, pos.y, muzzleSizeX, 2, 20);
@@ -104,7 +94,7 @@ class MuzzleFlash extends Effekt
 	}
 }
 
-class Star extends Effekt{
+class Star extends Effekt {
   
   //kopierad rakt av, några tweaks
   //https://www.openprocessing.org/sketch/65037/#
@@ -112,8 +102,7 @@ class Star extends Effekt{
   float flickerRate, light;
   boolean rise;
   
-  Star()
-  {
+  Star() {
     flickerRate = random(2,5); 
     starSize = int(random(2,5));
     xPos = int(random(0,width - starSize));
@@ -121,38 +110,45 @@ class Star extends Effekt{
     light = random(10,256);
     rise = true;
   }
-  void draw(){ 
-    if(light >= 245){
+
+  void draw() {   
+    
+    if(light >= 245) {
       rise = false;
     }
-    if(light <= 10){
+
+    if(light <= 10) {
       flickerRate = random(2,5);
       starSize = int(random(2,5));
       rise = true;
       xPos = int(random(0,width - starSize));
       yPos = int(random(0,height/3 - starSize));
     }
-    if(rise == true){
+
+    if(rise == true) {
       light +=flickerRate;
     }
-    if(rise == false){
+
+    if(rise == false) {
       light -= flickerRate;
     }
+
     fill(light);
     noStroke();
     rect(xPos, yPos,starSize,starSize);
+
   }
 }  
 
-class PowerUp
-{
+class PowerUp {
+
 	PVector pos;
 	color c;
 	boolean active;
 	float time;
 	float pickUpTime;
-	PowerUp()
-	{
+	
+	PowerUp() {
 		float x = random(20, width - 20);
 		float y = player.position.y + player.sizeH;
 		pos = new PVector(x,y);
@@ -160,8 +156,7 @@ class PowerUp
 		active = false;
 	}
 
-	void draw()
-	{
+	void draw() {
 		if(!active)	{
 			stroke(c + 50);
 			fill(c);
@@ -173,10 +168,8 @@ class PowerUp
 		}
 	}
 
-	void coll()
-	{
-		if(PVector.dist(player.position, pos) < 40)
-		{
+	void coll() {
+		if(PVector.dist(player.position, pos) < 40) {
 			pickUpTime = millis();
 			active = true;
 			powerUpSound.play();
@@ -184,8 +177,7 @@ class PowerUp
 		}
 	}
 
-	void remove()
-	{
+	void remove() {
 		if (millis() > time) {
 			end();
 			powerUps.remove(this);
@@ -197,19 +189,17 @@ class PowerUp
 	void end(){}
 }
 
-class SpeedBoost extends PowerUp
-{	
+class SpeedBoost extends PowerUp {	
+	
 	float duration;
 	color playerOgColor;
 
-	SpeedBoost(float time)
-	{
+	SpeedBoost(float time) {
 		duration = time * 1000;
 		c = color(255, 209, 48);
 	}
 
-	void start()
-	{
+	void start() {
 		playerOgColor = player.playerColor;
 		player.playerColor = color(255, 209, 48);
 		time = pickUpTime + duration;
@@ -219,8 +209,7 @@ class SpeedBoost extends PowerUp
 		playerProjectileSpeed += 150;
 	}
 
-	void end()
-	{
+	void end() {
 		player.speed = player.speed/2;
 		player.playerColor = playerOgColor;
 		playerProjectileSizeW -= 4;
@@ -229,39 +218,37 @@ class SpeedBoost extends PowerUp
 	}
 }
 
-class ExtraLife extends PowerUp
-{
-	ExtraLife()
-	{
+class ExtraLife extends PowerUp {
+	
+	ExtraLife() {
 		c = color(255, 72, 48);
 	}
-	void start()
-	{
+
+	void start() {
 		player.lives += 1;
 	}
 }
 
-class LargerBullets extends PowerUp
-{
+class LargerBullets extends PowerUp {
+	
 	float duration;
-	LargerBullets(float time)
-	{
+
+	LargerBullets(float time) {
 		duration = time * 1000;
 	}
-	void start()
-	{
+
+	void start() {
 		time = pickUpTime + duration;
 		playerProjectileSizeW += 10;
 		playerProjectileSizeH += 14;
 	}
-	void end()
-	{
+
+	void end() {
 		playerProjectileSizeW -= 10;
 		playerProjectileSizeH -= 14;
 	}
 }
 
-class ScoreDoubler extends PowerUp
-{
+class ScoreDoubler extends PowerUp {
 
 }

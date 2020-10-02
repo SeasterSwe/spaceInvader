@@ -20,7 +20,7 @@ public class Player {
 	draw();
 	}
 
-	void draw() {
+	void draw() { 
 		playerShape(position.x, position.y);
 	}
 
