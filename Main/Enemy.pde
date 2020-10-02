@@ -1,8 +1,7 @@
 
 
 //Jakob
-class Enemy
-{
+class Enemy {
 	color baseColor;
 	color eyeColor;
 
@@ -13,13 +12,11 @@ class Enemy
 	float eSizeY = 20;
 
 	float amountToAddToScore;
-	Enemy()
-	{
-		//behövdes för arv
-	}
 
-	Enemy(float x, float y, float scoreGive)
-	{
+	//behövdes för arv
+	Enemy(){}
+
+	Enemy(float x, float y, float scoreGive) {
 		baseColor = color(16, 121, 23);
 		eyeColor = color(152, 196, 155);
 		
@@ -28,8 +25,7 @@ class Enemy
 		amountToAddToScore = scoreGive;
 	}
 
-	void draw(float x)
-	{
+	void draw(float x) {
 		boarderCheck();
 		stroke(baseColor);
 		fill(baseColor);
@@ -39,8 +35,7 @@ class Enemy
 		animation();
 	}
 
-	void animation()
-	{
+	void animation() {
 		pushMatrix();
 		translate(pos.x,pos.y);
 		
@@ -51,8 +46,7 @@ class Enemy
 		popMatrix(); 
 	}
 
-	void eyes()
-	{
+	void eyes() {
         stroke(eyeColor);
         fill(eyeColor);
         strokeWeight(2);
@@ -62,8 +56,7 @@ class Enemy
         ellipse(-eSize/4, -eSize/4, 4, 2);
 	}
 
-	void legs(float length, float legSpeed)
-	{
+	void legs(float length, float legSpeed) {
 		float f = sin(frameCount * legSpeed);
 		strokeWeight(3);
 		stroke(baseColor);
@@ -71,31 +64,27 @@ class Enemy
 		line(eSize/2, eSize/2, eSize + f * 6f, length + f * 6f);
 	}
 
-	void mouth()
-	{
+	void mouth() {
 		stroke(eyeColor);
 		noFill();
 		rotate(180);
 		arc(-8, -8, eSize/2, eSize/2, -0.2, 1.6);
 	}
 
-	void killed()
-	{
+	void killed() {
 		enemyManager.increaseSpeed();
 		score += amountToAddToScore;
 		//effekts.add(new Explotion(pos.x,pos.y));
 		enemyManager.enemys.remove(this);
 	}
 
-	void boarderCheck()
-	{
-		if (pos.x > width - (eSize * 2))  {
+	void boarderCheck() {
+		if (pos.x > width - (eSize * 2)) {
 			dirX = -1;
 			oldPos.x = pos.x;
 			enemyManager.moveDown(2);
 		}
-		else if(pos.x < eSize*2)
-		{
+		else if(pos.x < eSize*2) {
 			dirX = 1;
 			oldPos.x = pos.x;
 			enemyManager.moveDown(2);
@@ -108,11 +97,10 @@ class RedShip extends Enemy{
 	float speed;
 	int amountOfTimesToBounce = 2;
 	
-	RedShip(int bounces)
-	{
+	RedShip(int bounces) {
 		amountOfTimesToBounce = bounces;
 		eSizeY = 12;
-		pos = new PVector(eSize, eSizeY);
+		pos = new PVector(eSize, eSizeY * 2);
 		speed = 2.5f;
 		baseColor = color(255, 186, 48);
 		eyeColor = color(7);
@@ -126,21 +114,17 @@ class RedShip extends Enemy{
 	
 	}
 
-	void draw()
-	{
+	void draw() {
 		super.draw(speed);
 	}
 
-	void boarderCheck()
-	{
-		if (pos.x > width - eSize/2 && amountOfTimesToBounce > 0)
-		{
+	void boarderCheck() {
+		if (pos.x > width - eSize/2 && amountOfTimesToBounce > 0) {
 			pos.x = width - eSize/2 - 5;
 			speed *= -1;
 			amountOfTimesToBounce--;
 		}
-		else if(pos.x < eSize/2 && amountOfTimesToBounce > 0)
-		{
+		else if(pos.x < eSize/2 && amountOfTimesToBounce > 0) {
 			speed *= -1;
 			pos.x = eSize/2 + 5;
 			amountOfTimesToBounce--;
@@ -148,20 +132,17 @@ class RedShip extends Enemy{
 	}
 }
 
-class EnemyProjectile
-{
+class EnemyProjectile {
 	PVector pos;
 	float speed = 2;
 	float sizeW = 4;
 	float sizeH = 15;
 
-	EnemyProjectile(float x, float y)
-	{
+	EnemyProjectile(float x, float y) {
 		pos = new PVector(x, y);
 	}
 
-	void draw()
-	{
+	void draw() {
 		pos.y += speed;
 		
 		float f = sin(frameCount * 0.2);
@@ -185,8 +166,7 @@ class EnemyProjectile
 		outOfScreen();
 	}
 
-	void collison()
-	{
+	void collison()	{
 
 		if (shields.size() >= 1) {
 			for (int i = 0; i < shields.size(); i++) {
@@ -195,7 +175,8 @@ class EnemyProjectile
 				int shieldW = shields.get(i).sizeW;
 				int shieldH = shields.get(i).sizeH;
 			
-			if ((pos.x >  shieldX && pos.x < shieldX + shieldW) ||  (pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
+			if ((pos.x >  shieldX && pos.x < shieldX + shieldW) ||
+			 (pos.x + sizeW >  shieldX && pos.x + sizeW < shieldX + shieldW)) {
 					if (pos.y + sizeH < shieldY + shieldH && pos.y + sizeH >shieldY) {
 						shields.remove(i);
 						remove();
@@ -207,8 +188,7 @@ class EnemyProjectile
 
 		float x1 = player.position.x;
 		float x2 = player.sizeW + x1;
-		if(abs(player.position.y - pos.y) < player.sizeH - 10)
-		{
+		if(abs(player.position.y - pos.y) < player.sizeH - 10) {
 			if (pos.x + sizeW > x1 && pos.x < x2) {
 				player.killed();
 				remove();
@@ -216,15 +196,13 @@ class EnemyProjectile
 		}
 	}
 
-	void outOfScreen()
-	{
+	void outOfScreen() {
 		if (pos.y > player.position.y + player.sizeH - sizeH) {
 			remove();
 		}
 	}
 
-	void remove()
-	{
+	void remove() {
 		//explotions.add(new Explotion(pos.x,pos.y));
 		effekts.add(new MuzzleFlash(pos.x + sizeW/2, pos.y + sizeH - 5, 0.2f, color(255, 207, 0), 30));
 		enemyManager.shoot();
