@@ -2,29 +2,29 @@
 static float playerProjectileSpeed = 300;
 static float playerProjectileSizeW = 4;
 static float playerProjectileSizeH = 10;
-public class PlayerProjectile  {
+
+class PlayerProjectile {
 	PVector position;
-	//float speed = 300;
 	float sizeW = 4;
 	float sizeH = 10;
+
 	public PlayerProjectile (float x, float y) {
 		position = new PVector(x - 2, y-10);
 		sizeW = playerProjectileSizeW;
 		sizeH = playerProjectileSizeH;
 	}
-	void update(){
+
+	void update() {
 		position.y -= playerProjectileSpeed * deltaTime;
-		
 	}
-	void draw(){
+
+	void draw() {
 		fill(165,165,165);
 		stroke(165,165,165);
-		rect(position.x, position.y, sizeW, sizeH, 10);
-		
-		
+		rect(position.x, position.y, sizeW, sizeH, 10);		
 	}
-	boolean collision() {
 
+	boolean collision() {
 		if (shields.size() >= 1) {
 			for (int i = 0; i < shields.size(); i++) {
 				float shieldX = shields.get(i).pos.x;
@@ -32,15 +32,15 @@ public class PlayerProjectile  {
 				int shieldW = shields.get(i).sizeW;
 				int shieldH = shields.get(i).sizeH;
 			
-			if ((position.x >  shieldX && position.x < shieldX + shieldW) ||  (position.x + sizeW >  shieldX && position.x + sizeW < shieldX + shieldW)) {
+				if ((position.x >  shieldX && position.x < shieldX + shieldW) ||  (position.x + sizeW >  shieldX && position.x + sizeW < shieldX + shieldW)) {
 
 					if (position.y < shieldY + shieldH && position.y >shieldY) {
 						shields.remove(i);
 						return true;
 					}
 				}	
-		}	
-	}
+			}	
+		}
 
 		if(bullets.size() >= 1) {
 			for (int i = 0; i < bullets.size(); ++i) {
@@ -52,11 +52,9 @@ public class PlayerProjectile  {
 						return true;
 					}
 				}
-
-
-				
 			}
 		}
+
 		for (int i = 0; i < enemyManager.enemys.size(); ++i) {
 			float radiusEnemy = enemyManager.enemys.get(i).eSize / 2;
 			float enemyXPos = enemyManager.enemys.get(i).pos.x;
