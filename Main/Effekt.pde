@@ -96,7 +96,7 @@ class MuzzleFlash extends Effekt
 
 class Star extends Effekt {
   
-  //kopierad rakt av, några tweaks
+  //kopierad rakt av, några tweaks samt lite omptimisering gjord å små förbättringar
   //https://www.openprocessing.org/sketch/65037/#
   int xPos, yPos, starSize;
   float flickerRate, light;
@@ -117,19 +117,19 @@ class Star extends Effekt {
       rise = false;
     }
 
-    if(light <= 10) {
+    else if(light <= 10) {
       flickerRate = random(2,5);
       starSize = int(random(2,5));
-      rise = true;
       xPos = int(random(0,width - starSize));
       yPos = int(random(0,height/3 - starSize));
+      rise = true;
     }
 
-    if(rise == true) {
-      light +=flickerRate;
+    if(rise) {
+      light += flickerRate;
     }
 
-    if(rise == false) {
+    else if(!rise) {
       light -= flickerRate;
     }
 
