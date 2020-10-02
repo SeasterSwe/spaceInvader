@@ -31,8 +31,15 @@ public class Ui {
 			textSize(40);
 			textAlign(CENTER, CENTER);
 			text("Game over", width/2, height/2 -20);
+			text("Press R to Restart", width/2, height/2 +20);
 		
 		}
+	}
+	void drawMenu() {
+		fill(210);
+		textSize(40);
+		textAlign(CENTER, CENTER);
+		text("Press space to play", width / 2, height / 2);
 	}
 	
 }

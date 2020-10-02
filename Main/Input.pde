@@ -15,26 +15,29 @@ public PVector movementInput() {
 
 
 void keyPressed() {
-	
-	if (keyCode == LEFT || key == 'a') {
-		moveLeft = true;
-	}
-	else if (keyCode == RIGHT || key == 'd') {
-		moveRight = true;
-	}
-	if (key == ' ') {
-		shoot = true;
+	if (alive) {
+		if (keyCode == LEFT || key == 'a' || key == 'A') {
+			moveLeft = true;
+		}
+		else if (keyCode == RIGHT || key == 'd' || key == 'D') {
+			moveRight = true;
+		}
+		if (key == ' ') {
+			shoot = true;
+		}
 	}
 }
 
 void keyReleased() {
-	if (keyCode == LEFT || key == 'a') {
-		moveLeft = false;
-	}
-	else if (keyCode == RIGHT || key == 'd') {
-		moveRight = false;
-	}
-	if (key == ' ') {
-		shoot = false;
+	if (alive) {
+		if (keyCode == LEFT || key == 'a' ||  key == 'A') {
+			moveLeft = false;
+		}
+		else if (keyCode == RIGHT || key == 'd' ||  key == 'D') {
+			moveRight = false;
+		}
+		if (key == ' ') {
+			shoot = false;
+		}
 	}
 }

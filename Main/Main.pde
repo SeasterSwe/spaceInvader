@@ -19,7 +19,7 @@ float timeToSpawnRedShip;
 
 static boolean alive = true;
 static int score = 0;
-
+boolean startGame = false;
 float deltaTime;
 float time;
 Player player;
@@ -58,7 +58,7 @@ void getSounds() {
 	dmgTakenSound.amp(0.05);
 	explotionSound.amp(0.008);
 	backSound.amp(0.005);
-	backSound.loop();
+	
 }
 
 void draw() {
@@ -66,17 +66,24 @@ void draw() {
 	long currentTime = millis();
 	deltaTime = (currentTime - time) * 0.001f;
 
-	player.update();
+	if (!startGame) {
+		startGame();	
+	}
+	else {
+		
+		player.update();
 
-	draws();
+		draws();
 
-	gameClearCheck();
-	
-	ui.draw();
+		gameClearCheck();
+		
+		ui.draw();
 
-	spawnRedShip();
+		spawnRedShip();
 
-	restart();
+		restart();
+	}
+
 	time = currentTime;
 }
 
@@ -185,10 +192,19 @@ void spawnRedShip() {
 		timeToSpawnRedShip = millis() + r;
 	}
 }
+void startGame() {
+	ui.drawMenu();
+	if (key == ' ') {
+			backSound.loop();
+			startGame = true;
+		}
+}
 
 void restart() {
 	if (!alive) {
-		if (keyPressed) {
+
+		if (key == 'r') {
+			backSound.stop();
 			shields.clear();
 			createShields();
 			score = 0;
@@ -196,6 +212,7 @@ void restart() {
 			alive = true;	
 			bullets.clear();
 			player = new Player();
+			startGame = false;
 			if (bullets.size() == 0) {
 				enemyManager.shoot();
 			}
