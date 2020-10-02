@@ -24,11 +24,19 @@ class EnemyManager {
 		float yDist = 25; //bör va lite större än eSize
 
 		speedIncreasePerDeath = maxSpeed/xRow/yRow;
+		
+		color startColor = color(16, 121, 23);
+		color endColor = color(171,23,0); //111,19,0(röd) //154,44,20(orange)
+		float startVal = 1;
+		float lerpVal = 1f/yRow; 
 
-		for (int x = 0; x < xRow; ++x) {
-			for (int y = 0; y < yRow; ++y) {
+		for (int y = 0; y < yRow; ++y) {
+			startVal -= lerpVal;
+			color baseColor = lerpColor(startColor, endColor, startVal);
+			
+			for (int x = 0; x < xRow; ++x) {
 				float amountOfScoreToGive = 10 * (2+yRow - y);
-				enemys.add(new Enemy(xStart + x * xDist, yStart + y * yDist, amountOfScoreToGive));
+				enemys.add(new Enemy(xStart + x * xDist, yStart + y * yDist, amountOfScoreToGive, baseColor));
 			}		
 		}
 		shoot();

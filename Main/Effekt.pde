@@ -1,13 +1,9 @@
 
 
 //Jakob
-class Effekt
-{	
+class Effekt {	
 	
-	void draw()
-	{
-
-	}
+	void draw() {}
 
 	void remove(float dur) {	
 		if (millis() > dur) {
@@ -15,8 +11,8 @@ class Effekt
 		}
 	}
 }
-class Explotion extends Effekt
-{
+
+class Explotion extends Effekt {
 	color c;
 	float rad;
 	float maxRad;
@@ -68,8 +64,8 @@ class Explotion extends Effekt
 	}
 }
 
-class MuzzleFlash extends Effekt
-{
+class MuzzleFlash extends Effekt {
+
 	color c;
 	
 	float timeOut;

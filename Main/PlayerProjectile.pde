@@ -56,7 +56,7 @@ class PlayerProjectile {
 		}
 
 		for (int i = 0; i < enemyManager.enemys.size(); ++i) {
-			float radiusEnemy = enemyManager.enemys.get(i).eSize / 2;
+			float radiusEnemy = enemyManager.enemys.get(i).sizeH / 2;
 			float enemyXPos = enemyManager.enemys.get(i).pos.x;
 			float enemyYPos = enemyManager.enemys.get(i).pos.y;
 		

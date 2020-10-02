@@ -41,7 +41,6 @@ void setup() {
    	powerUps.add(new SpeedBoost(10));
    	powerUps.add(new ExtraLife());
 	powerUps.add(new LargerBullets(20));
-
 	createShields();
 	getSounds();
 }
@@ -88,10 +87,7 @@ void draw() {
 }
 
 void draws() {
-	for (int i = 0; i < stars.size(); ++i) {
-		stars.get(i).draw();
-	}
-
+	drawStars();
 	drawBullets();
 	enemyManager.draw();
 	drawPowerUps();
@@ -100,6 +96,13 @@ void draws() {
 
 	if(redship != null)
 		redship.draw();
+}
+
+void drawStars()
+{
+	for (int i = 0; i < stars.size(); ++i) {
+		stars.get(i).draw();
+	}
 }
 
 void drawPowerUps() {

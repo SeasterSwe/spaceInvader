@@ -1,3 +1,6 @@
+
+
+//Jakob
 class PowerUp {
 
 	PVector pos;
@@ -50,7 +53,7 @@ class PowerUp {
 class SpeedBoost extends PowerUp {	
 	
 	float duration;
-	color playerOgColor;
+	color playerColor;
 
 	SpeedBoost(float time) {
 		duration = time * 1000;
@@ -58,9 +61,10 @@ class SpeedBoost extends PowerUp {
 	}
 
 	void start() {
-		playerOgColor = player.playerColor;
+		playerColor = player.playerColor;
 		player.playerColor = color(255, 209, 48);
 		time = pickUpTime + duration;
+		
 		player.speed *= 2;
 		playerProjectileSizeW += 4;
 		playerProjectileSizeH += 10;
@@ -69,7 +73,8 @@ class SpeedBoost extends PowerUp {
 
 	void end() {
 		player.speed = player.speed/2;
-		player.playerColor = playerOgColor;
+		player.playerColor = playerColor;
+		
 		playerProjectileSizeW -= 4;
 		playerProjectileSizeH -= 10;
 		playerProjectileSpeed -= 150;
@@ -96,7 +101,7 @@ class LargerBullets extends PowerUp {
 	}
 
 	void start() {
-		time = pickUpTime + duration;
+		time = pickUpTime + duration;		
 		playerProjectileSizeW += 10;
 		playerProjectileSizeH += 14;
 	}
