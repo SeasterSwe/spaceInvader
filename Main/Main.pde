@@ -50,7 +50,7 @@ void getSounds() {
 	explotionSound = new SoundFile(this, "Explotion.wav");
 	dmgTakenSound = new SoundFile(this, "Hurt.wav");
 	shootSound = new SoundFile(this, "Shoot.wav");
-	backSound = new SoundFile(this, "Backround.mp3");
+	backSound = new SoundFile(this, "Backround.wav");
 
 	powerUpSound.amp(0.005);
 	shootSound.amp(0.01);
